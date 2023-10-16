@@ -1,0 +1,85 @@
+using System;
+
+class Program {
+    public static void Main(string[] args) {
+        RecebeDados dados = new RecebeDados();
+        dados.Dados();
+    }
+
+    public class RecebeDados {
+        public string nomeJogador1;
+        public string nomeJogador2;
+        public int rodadas;
+
+        public void Dados() {
+            Console.WriteLine("Informe o nome do primeiro jogador:");
+            nomeJogador1 = Console.ReadLine();
+
+            Console.WriteLine("Informe o Nome do segundo jogador:");
+            nomeJogador2 = Console.ReadLine();
+
+            Console.WriteLine("Informe o número de rodadas:");
+            rodadas = int.Parse(Console.ReadLine());
+
+            Jogo(nomeJogador1, nomeJogador2, rodadas);
+        }
+
+        public void Jogo(string nomeJogador1, string nomeJogador2, int rodadas) {
+            Random dadoAleatorio = new Random();
+            int[] pontosJogador1 = new int[rodadas];
+            int[] pontosJogador2 = new int[rodadas];
+
+            int i = 0; 
+
+            while (i < rodadas) {
+                Console.WriteLine($"Rodada {i + 1}");
+                Console.WriteLine($"- Vez do {nomeJogador1} - Digite 'Jogar' para lançar o dado:");
+                string jogar = Console.ReadLine();
+
+                if (jogar == "Jogar" || jogar == "jogar") {
+                    int dado = dadoAleatorio.Next(1, 7);
+                    Console.WriteLine($"O valor sorteado do dado é: {dado}");
+                    pontosJogador1[i] = dado;
+                } else {
+                    Console.WriteLine("Comando errado inserido!");
+                }
+
+                Console.WriteLine($"- Vez do {nomeJogador2} - Digite 'Jogar' para lançar o dado:");
+                jogar = Console.ReadLine();
+
+                if (jogar == "Jogar" || jogar == "jogar") {
+                    int dado = dadoAleatorio.Next(1, 7);
+                    Console.WriteLine($"O valor sorteado do dado é: {dado}");
+                    pontosJogador2[i] = dado;
+                    i++; 
+                } else {
+                    Console.WriteLine("Comando errado inserido!");
+                }
+            }
+
+            int resultadoJogador1 = 0;
+            int resultadoJogador2 = 0;
+            string vencedor;
+          
+            for (int x = 0; x < rodadas; x++) {
+                resultadoJogador1 += pontosJogador1[x];
+                resultadoJogador2 += pontosJogador2[x];
+            }
+            if(resultadoJogador1 < resultadoJogador2){
+              vencedor = nomeJogador2;
+            }
+            else{
+              vencedor = nomeJogador1;
+            }
+           
+
+            Console.WriteLine("+----------------------------------------------------------------+");
+            Console.WriteLine("|                                                                |");
+            Console.WriteLine("|                                                                |");
+            Console.WriteLine($"|  - Pontos {nomeJogador1}: {resultadoJogador1} - Pontos {nomeJogador2}: {resultadoJogador2} |");
+            Console.WriteLine("|                                                                |");
+            Console.WriteLine($"|  Parabéns, {vencedor}!!!");
+            Console.WriteLine("+----------------------------------------------------------------+");
+        }
+    }
+}
